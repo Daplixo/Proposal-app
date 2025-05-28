@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For you!!!!!!!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="proposal-app">
+        <div class="screen intro-screen active">
+          <div class="background"></div>
+          <!-- Content for first scene will go here -->
+          <div class="cloud-animation">
+            <img id="top-cloud" src="assets/cloud1.png" />
+            <img id="bottom-cloud" src="assets/cloud2.png" />
+          </div>
+          <div class="character"></div>
+
+          <!-- New dialogue box structure -->
+          <div class="dialogue-container">
+            <div class="dialogue-box">
+              <p id="dialogue-text">
+                Hey there! I have something special to tell you...
+              </p>
+            </div>
+            <div class="dialogue-controls">
+              <button id="prev-btn" class="nav-btn" disabled>Back</button>
+              <div class="dialogue-progress">
+                <span id="current-page">1</span>/<span id="total-pages">5</span>
+              </div>
+              <button id="next-btn" class="nav-btn">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

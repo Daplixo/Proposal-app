@@ -1,0 +1,170 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: comic-sans, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.proposal-app {
+  width: 370px;
+  height: 740px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFDEDA; /* This is the background color for the first scene */
+  z-index: -1;
+}
+
+#bottom-cloud{
+    position: absolute;
+    z-index: -1;
+    animation: floatBottom 60s linear infinite;
+} 
+
+#top-cloud{
+    position: absolute;
+    z-index: 1;
+    animation: floatTop 60s linear infinite; 
+}
+
+
+@keyframes floatTop {
+    0% {
+        top: -580px;
+    }
+    100% {
+        top: 100%; 
+    }
+}
+
+
+@keyframes floatBottom {
+    0% {
+        top: -630px; 
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+/* Dialogue box styles */
+.dialogue-container {
+  position: absolute;
+  bottom: 40px;
+  left: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.dialogue-box {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#dialogue-text {
+  font-size: 18px;
+    font-weight: bold;
+  color: #853e3e;
+  line-height: 1.5;
+  margin: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dialogue-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.nav-btn {
+  background-color: #ff91a4;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not([disabled]) {
+  background-color: #ff7a92;
+  transform: scale(1.05);
+}
+
+.nav-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dialogue-progress {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  padding: 5px 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Character styling */
+.character {
+  position: absolute;
+  bottom: 190px; /* Position above dialogue box */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 200px;
+  background-image: url('assets/character.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 10;
+  /* If you don't have a character image yet, you can use a placeholder color */
+  /* background-color: #ff91a4; */
+}
