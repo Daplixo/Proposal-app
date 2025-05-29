@@ -155,18 +155,19 @@ body {
 /* Character styling */
 .character {
   position: absolute;
-  bottom: 330px;
+  bottom: 330px; /* Position above dialogue box */
   left: 50%;
   transform: translateX(-50%);
   width: 200px;
   height: 200px;
   border-radius: 50%;
   border: #f5f5f5 5px solid;
-  background-image: url('assets/character.jpg'); /* Replace with your character image */
+  background-image: url('assets/character1.jpg');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 10;
+  transition: opacity 0.3s ease;
 }
 
 /* Audio control styles */

@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextBtn = document.getElementById('next-btn');
     const currentPage = document.getElementById('current-page');
     const totalPages = document.getElementById('total-pages');
+    const character = document.querySelector('.character');
     
     // Array of dialogue messages
     const dialogues = [
@@ -58,6 +59,23 @@ document.addEventListener('DOMContentLoaded', function() {
         "then we’ve got a little walk down memory lane to take.",
         "So yeah… welcome to this little world I built.",
         "Let’s begin from the beginning, shall we?"
+    ];
+    
+    // Array of character images for each dialogue
+    const characterImages = [
+        "assets/character.jpg", // For dialogue 1
+        "assets/characterSmiling.jpg", // For dialogue 2
+        "assets/character.jpg", // For dialogue 3
+        "assets/characterBlush.jpg", // For dialogue 4
+        "assets/characterBlush.jpg", // For dialogue 5
+        "assets/characterBlush.jpg", // For dialogue 6
+        "assets/characterBlush.jpg", // For dialogue 7
+        "assets/character.jpg", // For dialogue 8
+        "assets/character.jpg", // For dialogue 9
+        "assets/character.jpg", // For dialogue 10
+        "assets/characterSmiling.jpg", // For dialogue 11
+        "assets/character.jpg", // For dialogue 12
+        "assets/characterBlush.jpg"  // For dialogue 13
     ];
     
     // Set total pages in the UI
@@ -90,7 +108,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }, speed);
     }
     
-    // Update dialogue text with typewriter effect
+    // Function to update character image based on dialogue index
+    function updateCharacterImage(index) {
+        // Get current image path from style or use empty string if not set
+        const currentImageStyle = character.style.backgroundImage;
+        const newImagePath = `url('${characterImages[index]}')`;
+        
+        // Check if this is the initial image (index 0) or if the image is changing
+        if (index === 0 || currentImageStyle === '') {
+            // For first image or if no image is set yet, just set it without animation
+            character.style.backgroundImage = newImagePath;
+            character.style.opacity = 1;
+        } else if (currentImageStyle !== newImagePath) {
+            // Only animate if the image is actually changing
+            // Fade out character
+            character.style.opacity = 0;
+            
+            // Change image after fade out
+            setTimeout(() => {
+                character.style.backgroundImage = newImagePath;
+                // Fade in with new image
+                character.style.opacity = 1;
+            }, 300);
+        }
+        // If the image is not changing, do nothing to avoid unnecessary transitions
+    }
+    
+    // Set initial character image
+    if (characterImages[0]) {
+        character.style.backgroundImage = `url('${characterImages[0]}')`;
+    }
+    
+    // Update dialogue text with typewriter effect and character image
     function updateDialogue(index) {
         // Fade out
         dialogueText.style.opacity = 0;
@@ -98,6 +147,9 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             // Update page counter
             currentPage.textContent = index + 1;
+            
+            // Update character image
+            updateCharacterImage(index);
             
             // Fade in (empty)
             dialogueText.style.opacity = 1;
@@ -125,4 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize the first dialogue with typewriter effect
     // This ensures the first text also has the typewriter effect
     typeText(dialogueText, dialogues[0]);
+    
+    // Set initial character image
+    updateCharacterImage(0);
 });
