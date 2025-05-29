@@ -24,7 +24,7 @@ body {
 
 .proposal-app {
   width: 370px;
-  height: 740px;
+  height: 680px;
   position: relative;
   overflow: hidden;
   border-radius: 20px;
@@ -88,7 +88,7 @@ body {
 /* Dialogue box styles */
 .dialogue-container {
   position: absolute;
-  bottom: 40px;
+  bottom: 150px;
   left: 20px;
   right: 20px;
   z-index: 100;
@@ -139,7 +139,7 @@ body {
 }
 
 .nav-btn:disabled {
-  background-color: #ccc;
+  background-color: #c58b8b;
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -149,22 +149,50 @@ body {
   border-radius: 15px;
   padding: 5px 15px;
   font-size: 14px;
-  color: #666;
+  color: #a36666;
 }
 
 /* Character styling */
 .character {
   position: absolute;
-  bottom: 190px; /* Position above dialogue box */
+  bottom: 330px;
   left: 50%;
   transform: translateX(-50%);
-  width: 150px;
+  width: 200px;
   height: 200px;
-  background-image: url('assets/character.png');
+  border-radius: 50%;
+  border: #f5f5f5 5px solid;
+  background-image: url('assets/character.jpg'); /* Replace with your character image */
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 10;
-  /* If you don't have a character image yet, you can use a placeholder color */
-  /* background-color: #ff91a4; */
+}
+
+/* Audio control styles */
+.audio-control {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+}
+
+#audio-toggle {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#audio-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.05);
 }
