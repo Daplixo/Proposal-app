@@ -181,6 +181,82 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     }
     
+    // Timeline screen dialogue system
+    const timelineDialogueText = document.getElementById('timeline-dialogue-text');
+    const timelinePrevBtn = document.getElementById('timeline-prev-btn');
+    const timelineNextBtn = document.getElementById('timeline-next-btn');
+    const timelineCurrentPage = document.getElementById('timeline-current-page');
+    const timelineTotalPages = document.getElementById('timeline-total-pages');
+    const timelineCharacter = document.querySelector('.timeline-character');
+    
+    // Array of timeline dialogue messages
+    const timelineDialogues = [
+        "Welcome to our story...",
+        "Let me take you through the special moments we've shared.",
+        "Each memory is a treasure I hold dear.",
+        "I hope you enjoy this journey through our time together.",
+        "And maybe there's more to come at the end..."
+    ];
+    
+    // Array of timeline character images
+    const timelineCharacterImages = [
+        "assets/character.jpg",
+        "assets/characterSmiling.jpg",
+        "assets/characterBlush.jpg",
+        "assets/characterSmiling.jpg",
+        "assets/character.jpg"
+    ];
+    
+    // Set total pages in the timeline UI
+    timelineTotalPages.textContent = timelineDialogues.length;
+    
+    // Current timeline dialogue index
+    let currentTimelineDialogueIndex = 0;
+    
+    // Function to update timeline character image
+    function updateTimelineCharacterImage(index) {
+        const currentImageStyle = timelineCharacter.style.backgroundImage;
+        const newImagePath = `url('${timelineCharacterImages[index]}')`;
+        
+        if (index === 0 || currentImageStyle === '') {
+            timelineCharacter.style.backgroundImage = newImagePath;
+            timelineCharacter.style.opacity = 1;
+        } else if (currentImageStyle !== newImagePath) {
+            timelineCharacter.style.opacity = 0;
+            
+            setTimeout(() => {
+                timelineCharacter.style.backgroundImage = newImagePath;
+                timelineCharacter.style.opacity = 1;
+            }, 300);
+        }
+    }
+    
+    // Update timeline dialogue with typewriter effect
+    function updateTimelineDialogue(index) {
+        // Fade out
+        timelineDialogueText.style.opacity = 0;
+        
+        setTimeout(() => {
+            // Update page counter
+            timelineCurrentPage.textContent = index + 1;
+            
+            // Update character image
+            updateTimelineCharacterImage(index);
+            
+            // Fade in (empty)
+            timelineDialogueText.style.opacity = 1;
+            
+            // Start typewriter effect for timeline
+            typeText(timelineDialogueText, timelineDialogues[index], 30, null);
+            
+            // Check if this is the last dialogue
+            if (index === timelineDialogues.length - 1) {
+                timelineNextBtn.textContent = "Finish";
+                // You can add another function here for what happens after the timeline
+            }
+        }, 300);
+    }
+    
     // Function to transition to timeline screen
     function showTimelineScreen() {
         const introScreen = document.querySelector('.intro-screen');
@@ -225,6 +301,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Start butterfly animation after transition completes
                 startButterflyAnimation();
+                
+                // Initialize timeline dialogue
+                updateTimelineCharacterImage(0);
+                typeText(timelineDialogueText, timelineDialogues[0], 30, null);
             }, 500);
         }, 100);
     }
@@ -264,6 +344,21 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentDialogueIndex > 0) {
             currentDialogueIndex--;
             updateDialogue(currentDialogueIndex);
+        }
+    });
+    
+    // Event listeners for timeline navigation buttons
+    timelineNextBtn.addEventListener('click', function() {
+        if (currentTimelineDialogueIndex < timelineDialogues.length - 1) {
+            currentTimelineDialogueIndex++;
+            updateTimelineDialogue(currentTimelineDialogueIndex);
+        }
+    });
+    
+    timelinePrevBtn.addEventListener('click', function() {
+        if (currentTimelineDialogueIndex > 0) {
+            currentTimelineDialogueIndex--;
+            updateTimelineDialogue(currentTimelineDialogueIndex);
         }
     });
     

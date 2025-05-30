@@ -71,11 +71,35 @@
           <div class="butterfly-animation">
             <img id="butterfly" src="assets/butterfly1.png" alt="Butterfly" />
           </div>
+          <!-- Character for timeline screen -->
+          <div class="timeline-character"></div>
+
           <!-- Audio element for timeline screen background music -->
           <audio id="background-music-timeline" loop>
             <source src="audio/sound2.mp3" type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
+
+          <!-- Timeline dialogue box structure -->
+          <div class="timeline-dialogue-container">
+            <div class="dialogue-box">
+              <p id="timeline-dialogue-text">
+                Let me tell you about our wonderful journey...
+              </p>
+            </div>
+            <div class="dialogue-controls">
+              <button id="timeline-prev-btn" class="nav-btn" disabled>
+                Back
+              </button>
+              <div class="dialogue-progress">
+                <span id="timeline-current-page">1</span>/<span
+                  id="timeline-total-pages"
+                  >5</span
+                >
+              </div>
+              <button id="timeline-next-btn" class="nav-btn">Next</button>
+            </div>
+          </div>
           <!-- Content for timeline will be added later -->
         </div>
       </div>

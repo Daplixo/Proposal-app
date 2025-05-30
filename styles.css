@@ -216,6 +216,47 @@ body {
   display: block;
 }
 
+/* Timeline character styling */
+.timeline-character {
+  position: absolute;
+  bottom: 330px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: #f5f5f5 5px solid;
+  background-image: url('assets/character1.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+/* Timeline dialogue container */
+.timeline-dialogue-container {
+  position: absolute;
+  bottom: 150px;
+  left: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+/* Ensuring dialogue-box styles apply to both screens */
+.timeline-dialogue-container .dialogue-box {
+  min-height: 120px;
+}
+
+#timeline-dialogue-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #853e3e;
+  line-height: 1.5;
+  margin: 0;
+  transition: opacity 0.3s ease;
+}
+
 /* Animation classes for screen transitions */
 .slide-up-out {
   transform: translateY(-100%);
