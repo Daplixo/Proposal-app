@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Background audio setup
-    const backgroundMusic = document.getElementById('background-music');
+    const introMusic = document.getElementById('background-music-intro');
+    const timelineMusic = document.getElementById('background-music-timeline');
+    let currentMusic = introMusic; // Start with intro music as active
     
     // Function to play background music (must be triggered by user interaction due to browser policies)
     function playBackgroundMusic() {
-        backgroundMusic.volume = 0.5; // Set volume to 50%
-        backgroundMusic.play().catch(e => {
+        currentMusic.volume = 0.5; // Set volume to 50%
+        currentMusic.play().catch(e => {
             console.log('Audio playback failed:', e);
         });
     }
@@ -19,18 +21,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to toggle button
     const audioToggle = document.getElementById('audio-toggle');
     audioToggle.addEventListener('click', function() {
-        if (backgroundMusic.paused) {
+        if (currentMusic.paused) {
             playBackgroundMusic();
             audioToggle.textContent = '🔊';
         } else {
-            backgroundMusic.pause();
+            currentMusic.pause();
             audioToggle.textContent = '🔇';
         }
     });
     
     // Auto-play attempt (may not work due to browser policies)
     document.body.addEventListener('click', function() {
-        if (backgroundMusic.paused) {
+        if (currentMusic.paused) {
             playBackgroundMusic();
             audioToggle.textContent = '🔊';
         }
@@ -101,7 +103,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearInterval(typing);
                 // Re-enable buttons when typing is done
                 prevBtn.disabled = currentDialogueIndex === 0;
-                nextBtn.disabled = currentDialogueIndex === dialogues.length - 1;
+                
+                // Don't disable the next button on the last dialogue so we can continue
+                if (currentDialogueIndex === dialogues.length - 1) {
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = "Continue";
+                    nextBtn.onclick = function() {
+                        showTimelineScreen();
+                    };
+                } else {
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = "Next";
+                }
                 
                 if (onComplete) onComplete();
             }
@@ -156,7 +169,87 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Start typewriter effect
             typeText(dialogueText, dialogues[index]);
+            
+            // Check if this is the last dialogue to show continue option
+            if (index === dialogues.length - 1) {
+                nextBtn.textContent = "Continue";
+                nextBtn.disabled = false;
+                nextBtn.onclick = function() {
+                    showTimelineScreen();
+                };
+            }
         }, 300);
+    }
+    
+    // Function to transition to timeline screen
+    function showTimelineScreen() {
+        const introScreen = document.querySelector('.intro-screen');
+        const timelineScreen = document.querySelector('.timeline');
+        
+        // Fade out and stop intro music
+        if (!introMusic.paused) {
+            // Fade out the audio
+            let volume = introMusic.volume;
+            const fadeInterval = setInterval(function() {
+                volume = Math.max(0, volume - 0.05);
+                introMusic.volume = volume;
+                if (volume <= 0) {
+                    clearInterval(fadeInterval);
+                    introMusic.pause();
+                    
+                    // Switch the music reference and start timeline music
+                    currentMusic = timelineMusic;
+                    
+                    // If audio was playing before, start the new audio
+                    if (audioToggle.textContent === '🔊') {
+                        playBackgroundMusic();
+                    }
+                }
+            }, 100);
+        } else {
+            // Just switch the music reference without playing
+            currentMusic = timelineMusic;
+        }
+        
+        // Add transition classes
+        introScreen.classList.add('slide-up-out');
+        
+        // After animation starts
+        setTimeout(() => {
+            introScreen.classList.remove('active');
+            timelineScreen.classList.add('active', 'slide-up-in');
+            
+            // When transition completes
+            setTimeout(() => {
+                timelineScreen.classList.remove('slide-up-in');
+                
+                // Start butterfly animation after transition completes
+                startButterflyAnimation();
+            }, 500);
+        }, 100);
+    }
+    
+    // Function to animate butterfly by alternating between two images
+    function startButterflyAnimation() {
+        const butterfly = document.getElementById('butterfly');
+        
+        // Images to alternate between
+        const butterflyImage1 = 'assets/butterfly1.png';
+        const butterflyImage2 = 'assets/butterfly2.png';
+        
+        // Current image tracker
+        let currentImage = 1;
+        
+        // Set interval to alternate images every 500ms (0.5 seconds)
+        setInterval(() => {
+            if (currentImage === 1) {
+                butterfly.src = butterflyImage2;
+                currentImage = 2;
+            } else {
+                butterfly.src = butterflyImage1;
+                currentImage = 1;
+            }
+        }, 500);
     }
     
     // Event listeners for navigation buttons
